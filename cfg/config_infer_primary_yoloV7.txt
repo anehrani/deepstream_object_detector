@@ -4,8 +4,8 @@ net-scale-factor=0.0039215697906911373
 model-color-format=0
 
 # onnx model
-onnx-file=/home/ek/projlab/yolov7/checkpoints/yolo_pre/yolov7.onnx
-model-engine-file=/home/ek/projlab/yolov7/checkpoints/yolo_pre/yolov7.onnx_b1_gpu0_fp32.engine
+onnx-file=/home/ek/EkinStash/ds_models/obj_det_yolo/yolo7/v.0.1/yolov7_v.0.1.onnx
+model-engine-file=/home/ek/EkinStash/ds_models/obj_det_yolo/yolo7/v.0.1/yolov7_v.0.1.onnx_b1_gpu0_fp32.engine
 
 #onnx-file=/home/ek/EkinStash/ds_models/obj_det_yolo/yolo7/v.0.1/yolov7-tiny.onnx
 #model-engine-file=/home/ek/EkinStash/ds_models/obj_det_yolo/yolo7/v.0.1/yolov7-tiny.onnx_b1_gpu0_fp16.engine
@@ -30,6 +30,9 @@ tlt-model-key=nvidia_tlt
 maintain-aspect-ratio=1
 parse-bbox-func-name=NvDsInferParseYolo7NMS
 custom-lib-path=../lib/yolo7/v_0.1/libnvdsinfer_custom_bbox_yolo_plt.so
+#parse-bbox-func-name=NvDsInferParseYolo
+#custom-lib-path=../lib/q_Yolo/libnvdsinfer_custom_impl_Yolo.so
+#custom-lib-path=../lib/q_Yolo/quantized_Yolo7.so
 #engine-create-func-name=NvDsInferYoloCudaEngineGet
 
 

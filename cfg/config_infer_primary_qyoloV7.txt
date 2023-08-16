@@ -42,9 +42,11 @@ net-scale-factor=0.0039215697906911373
 #0=RGB, 1=BGR
 model-color-format=0
 onnx-file=/home/ek/EkinStash/ds_models/obj_det_yolo/yolov7qt/yolov7_dy.onnx
+model-engine-file=/home/ek/EkinStash/ds_models/obj_det_yolo/yolov7qt/yolov7_dy.onnx_b1_gpu0_fp16.engine
 labelfile-path=labels.txt
 ## 0=FP32, 1=INT8, 2=FP16 mode
-network-mode=2
+network-mode=1
+int8-calib-file=calib.table
 num-detected-classes=80
 gie-unique-id=1
 network-type=0

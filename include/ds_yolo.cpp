@@ -1,6 +1,7 @@
 //
 // Created by ek on 28.07.2022.
 //
+#include <chrono>
 
 #include "ds_yolo.h"
 
@@ -10,6 +11,10 @@
 #define MUXER_OUTPUT_WIDTH 1920
 #define MUXER_OUTPUT_HEIGHT 1080
 #define MUXER_BATCH_TIMEOUT_USEC 40000
+constexpr auto ELEMENT_SINK_FILE = "filesink";
+constexpr auto ELEMENT_SINK_FPS_DISPLAY = "fpsdisplaysink";
+constexpr auto ELEMENT_NAME_SINK_FPS_DISPLAY = "fps-display";
+
 
 gint frame_number = 0;
 gchar pgie_classes_str[13][32] = {"person", "bicycle", "car", "motorcycle", "airplane", "bus", "train", "truck", "boat", "traffic light",
@@ -44,7 +49,7 @@ static GstPadProbeReturn osd_sink_pad_buffer_probe (GstPad * pad, GstPadProbeInf
                 num_rects++;
             }
 
-#if 1
+#if 0
             display_meta = nvds_acquire_display_meta_from_pool(batch_meta);
             NvOSD_TextParams *txt_params = &display_meta->text_params[0];
             display_meta->num_labels = 1;
@@ -76,11 +81,11 @@ static GstPadProbeReturn osd_sink_pad_buffer_probe (GstPad * pad, GstPadProbeInf
 #endif
         } // object meta
     } // frame meta
-
+    /*
     g_print ("Frame Number = %d Number of objects = %d "
              "Vehicle Count = %d Person Count = %d\n",
              frame_number, num_rects, vehicle_count, person_count);
-
+    */
     frame_number++;
     return GST_PAD_PROBE_OK;
 }
@@ -223,7 +228,7 @@ int yolo_deepstream (int argc, char *argv[])
     /* Set all the necessary properties of the nvinfer element,
      * the necessary ones are : */
     g_object_set (G_OBJECT (pgie),
-                  "config-file-path", "../cfg/config_infer_primary_qyoloV7.txt", NULL);
+                  "config-file-path", "../cfg/config_infer_primary_yoloV7.txt", NULL);
 
     g_object_set (G_OBJECT (sink), "location", argv[2], NULL);
     g_object_set (G_OBJECT (sink), "sync", 1, NULL);
@@ -231,6 +236,13 @@ int yolo_deepstream (int argc, char *argv[])
     caps = gst_caps_new_simple ("video/x-raw", "format", G_TYPE_STRING, "I420", NULL);
     g_object_set (G_OBJECT (capsfilter), "caps", caps, NULL);
     g_object_set (G_OBJECT (encoder), "bitrate", 2000000, NULL);
+
+    GstElement *fpsSink = nullptr;
+    fpsSink = gst_element_factory_make (ELEMENT_SINK_FPS_DISPLAY, ELEMENT_NAME_SINK_FPS_DISPLAY);
+    if (nullptr == fpsSink) {
+        return 0;
+    }
+    g_object_set (G_OBJECT (fpsSink), "text-overlay", FALSE, "video-sink", sink, "sync", FALSE, NULL);
 
     /* we add a message handler */
     bus = gst_pipeline_get_bus (GST_PIPELINE (pipeline));
@@ -242,14 +254,14 @@ int yolo_deepstream (int argc, char *argv[])
     if(prop.integrated) {
         gst_bin_add_many (GST_BIN (pipeline),
                           source, h264parser, decoder, streammux, pgie,
-                          nvvidconv, nvosd, transform, sink, NULL);
+                          nvvidconv, nvosd, transform, fpsSink, NULL);
     }
     else {
         // this is for pc
         gst_bin_add_many (GST_BIN (pipeline),
                           source, h264parser, decoder, streammux, pgie,
                           nvvidconv, nvosd, queue, nvvidconv2, capsfilter, encoder,
-                          codeparser, container, sink, NULL);
+                          codeparser, container, fpsSink, NULL);
     }
 
     GstPad *sinkpad, *srcpad;
@@ -287,7 +299,7 @@ int yolo_deepstream (int argc, char *argv[])
 
     if(prop.integrated) {
         if (!gst_element_link_many (streammux, pgie,
-                                    nvvidconv, nvosd, transform, sink, NULL)) {
+                                    nvvidconv, nvosd, transform, fpsSink, NULL)) {
             g_printerr ("Elements could not be linked: 2. Exiting.\n");
             return -1;
         }
@@ -296,7 +308,7 @@ int yolo_deepstream (int argc, char *argv[])
         // this is for pc
         if (!gst_element_link_many (streammux, pgie,
                                     nvvidconv, nvosd, queue, nvvidconv2, capsfilter, encoder,
-                                    codeparser, container, sink, NULL)) {
+                                    codeparser, container, fpsSink, NULL)) {
             g_printerr ("Elements could not be linked: 2. Exiting.\n");
             return -1;
         }
@@ -313,14 +325,27 @@ int yolo_deepstream (int argc, char *argv[])
                            osd_sink_pad_buffer_probe, NULL, NULL);
     gst_object_unref (osd_sink_pad);
 
+    /*
+    ::metadata::producer = mProducer;
+    gst_pad_add_probe (nvdsanalytics_src_pad, GST_PAD_PROBE_TYPE_BUFFER,
+                       ::metadata::nvdsanalyticsSrcPadBufferProbe, reinterpret_cast<gpointer>(fpsSink), NULL);
+    gst_object_unref (nvdsanalytics_src_pad);
+    */
+
+
     /* Set the pipeline to "playing" state */
     g_print ("Now playing");
     gst_element_set_state (pipeline, GST_STATE_PLAYING);
 
     /* Wait till pipeline encounters an error or EOS */
     g_print ("Running...\n");
+    
+    // measuring the total average FPS in video streaming for the detector
+    auto start = std::chrono::steady_clock::now();
     g_main_loop_run (loop);
-
+    auto end = std::chrono::steady_clock::now();
+    auto elapsed = std::chrono::duration_cast<std::chrono::seconds>(end - start);
+    std::cout << "num frames: "<< frame_number << "Average FPS: " << (float)frame_number/elapsed.count() << " microseconds\n";
     /* Out of the main loop, clean up nicely */
     g_print ("Returned, stopping playback\n");
     gst_element_set_state (pipeline, GST_STATE_NULL);
