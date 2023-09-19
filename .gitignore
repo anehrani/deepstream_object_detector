@@ -1,3 +1,10 @@
 cmake-build-debug/
 .idea/*
 results/*
+
+build/*
+cmake-build-debug/*
+#objects
+*.o
+*.d
+*.bin

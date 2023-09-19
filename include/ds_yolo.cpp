@@ -223,7 +223,7 @@ int yolo_deepstream (int argc, char *argv[])
     /* Set all the necessary properties of the nvinfer element,
      * the necessary ones are : */
     g_object_set (G_OBJECT (pgie),
-                  "config-file-path", "../cfg/config_infer_primary_qyoloV7.txt", NULL);
+                  "config-file-path", "../cfg/config_infer_primary_yoloV7.txt", NULL);
 
     g_object_set (G_OBJECT (sink), "location", argv[2], NULL);
     g_object_set (G_OBJECT (sink), "sync", 1, NULL);
@@ -299,8 +299,7 @@ int yolo_deepstream (int argc, char *argv[])
                                     codeparser, container, sink, NULL)) {
             g_printerr ("Elements could not be linked: 2. Exiting.\n");
             return -1;
-        }
-    }
+        }    }
 
     /* Lets add probe to get informed of the meta data generated, we add probe to
      * the sink pad of the osd element, since by that time, the buffer would have

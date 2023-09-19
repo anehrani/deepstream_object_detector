@@ -4,11 +4,11 @@ net-scale-factor=0.0039215697906911373
 model-color-format=0
 
 # onnx model
-onnx-file=/home/ek/projlab/yolov7/checkpoints/yolo_pre/yolov7.onnx
-model-engine-file=/home/ek/projlab/yolov7/checkpoints/yolo_pre/yolov7.onnx_b1_gpu0_fp32.engine
+#onnx-file=/home/ek/projlab/yolov7/checkpoints/yolo_pre/yolov7.onnx
+#model-engine-file=/home/ek/projlab/yolov7/checkpoints/yolo_pre/yolov7.onnx_b1_gpu0_fp32.engine
 
-#onnx-file=/home/ek/EkinStash/ds_models/obj_det_yolo/yolo7/v.0.1/yolov7-tiny.onnx
-#model-engine-file=/home/ek/EkinStash/ds_models/obj_det_yolo/yolo7/v.0.1/yolov7-tiny.onnx_b1_gpu0_fp16.engine
+onnx-file=/home/ek/EkinStash/ds_models/obj_det_yolo/yolo7/v.0.1/yolov7-tiny.onnx
+model-engine-file=/home/ek/EkinStash/ds_models/obj_det_yolo/yolo7/v.0.1/yolov7-tiny.onnx_b1_gpu0_fp16.engine
 
 #model-engine-file=/home/ek/EkinStash/ds_models/obj_det_yolo/yolo7/v.0.1/yolov7-nms.trt
 #int8-calib-file=calib.table
