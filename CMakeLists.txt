@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.17)
-project(YoloObjectDetector)
+project(YoloObjectDetector_dm)
 
 set(CMAKE_CXX_STANDARD 14) #setting C++ 14 standard
 find_package(PkgConfig) #finding pkg-config is a helper tool

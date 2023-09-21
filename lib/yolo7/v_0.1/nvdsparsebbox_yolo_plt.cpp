@@ -22,6 +22,8 @@ static bool NvDsInferParseCustomYolo7(
         NvDsInferParseDetectionParams const& detectionParams, std::vector<NvDsInferParseObjectInfo>& objectList,
         const uint &numClasses)
 {
+
+    std::cout<< "inside model parse --- \n"; 
     if (outputLayersInfo.empty())
     {
         std::cerr << "ERROR: Could not find output layer in bbox parsing" << std::endl;

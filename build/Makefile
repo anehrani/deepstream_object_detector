@@ -117,24 +117,24 @@ depend:
 .PHONY : depend
 
 #=============================================================================
-# Target rules for targets named YoloObjectDetector
+# Target rules for targets named YoloObjectDetector_dm
 
 # Build rule for target.
-YoloObjectDetector: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 YoloObjectDetector
-.PHONY : YoloObjectDetector
+YoloObjectDetector_dm: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 YoloObjectDetector_dm
+.PHONY : YoloObjectDetector_dm
 
 # fast build rule for target.
-YoloObjectDetector/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/YoloObjectDetector.dir/build.make CMakeFiles/YoloObjectDetector.dir/build
-.PHONY : YoloObjectDetector/fast
+YoloObjectDetector_dm/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/YoloObjectDetector_dm.dir/build.make CMakeFiles/YoloObjectDetector_dm.dir/build
+.PHONY : YoloObjectDetector_dm/fast
 
 include/ds_yolo.o: include/ds_yolo.cpp.o
 .PHONY : include/ds_yolo.o
 
 # target to build an object file
 include/ds_yolo.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/YoloObjectDetector.dir/build.make CMakeFiles/YoloObjectDetector.dir/include/ds_yolo.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/YoloObjectDetector_dm.dir/build.make CMakeFiles/YoloObjectDetector_dm.dir/include/ds_yolo.cpp.o
 .PHONY : include/ds_yolo.cpp.o
 
 include/ds_yolo.i: include/ds_yolo.cpp.i
@@ -142,7 +142,7 @@ include/ds_yolo.i: include/ds_yolo.cpp.i
 
 # target to preprocess a source file
 include/ds_yolo.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/YoloObjectDetector.dir/build.make CMakeFiles/YoloObjectDetector.dir/include/ds_yolo.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/YoloObjectDetector_dm.dir/build.make CMakeFiles/YoloObjectDetector_dm.dir/include/ds_yolo.cpp.i
 .PHONY : include/ds_yolo.cpp.i
 
 include/ds_yolo.s: include/ds_yolo.cpp.s
@@ -150,7 +150,7 @@ include/ds_yolo.s: include/ds_yolo.cpp.s
 
 # target to generate assembly for a file
 include/ds_yolo.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/YoloObjectDetector.dir/build.make CMakeFiles/YoloObjectDetector.dir/include/ds_yolo.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/YoloObjectDetector_dm.dir/build.make CMakeFiles/YoloObjectDetector_dm.dir/include/ds_yolo.cpp.s
 .PHONY : include/ds_yolo.cpp.s
 
 main.o: main.cpp.o
@@ -158,7 +158,7 @@ main.o: main.cpp.o
 
 # target to build an object file
 main.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/YoloObjectDetector.dir/build.make CMakeFiles/YoloObjectDetector.dir/main.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/YoloObjectDetector_dm.dir/build.make CMakeFiles/YoloObjectDetector_dm.dir/main.cpp.o
 .PHONY : main.cpp.o
 
 main.i: main.cpp.i
@@ -166,7 +166,7 @@ main.i: main.cpp.i
 
 # target to preprocess a source file
 main.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/YoloObjectDetector.dir/build.make CMakeFiles/YoloObjectDetector.dir/main.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/YoloObjectDetector_dm.dir/build.make CMakeFiles/YoloObjectDetector_dm.dir/main.cpp.i
 .PHONY : main.cpp.i
 
 main.s: main.cpp.s
@@ -174,7 +174,7 @@ main.s: main.cpp.s
 
 # target to generate assembly for a file
 main.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/YoloObjectDetector.dir/build.make CMakeFiles/YoloObjectDetector.dir/main.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/YoloObjectDetector_dm.dir/build.make CMakeFiles/YoloObjectDetector_dm.dir/main.cpp.s
 .PHONY : main.cpp.s
 
 # Help Target
@@ -185,7 +185,7 @@ help:
 	@echo "... depend"
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
-	@echo "... YoloObjectDetector"
+	@echo "... YoloObjectDetector_dm"
 	@echo "... include/ds_yolo.o"
 	@echo "... include/ds_yolo.i"
 	@echo "... include/ds_yolo.s"

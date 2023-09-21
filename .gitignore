@@ -1,6 +1,7 @@
 cmake-build-debug/*
 .idea/*
 results/*
+build/*
 
 *.o
 *.obj

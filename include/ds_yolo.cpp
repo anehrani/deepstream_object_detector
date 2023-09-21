@@ -17,8 +17,8 @@ constexpr auto ELEMENT_NAME_SINK_FPS_DISPLAY = "fps-display";
 
 
 gint frame_number = 0;
-gchar pgie_classes_str[13][32] = {"person", "bicycle", "car", "motorcycle", "airplane", "bus", "train", "truck", "boat", "traffic light",
-"fire hydrant", "stop sign", "parking meter"};
+// gchar pgie_classes_str[13][32] = {"person", "bicycle", "car", "motorcycle", "airplane", "bus", "train", "truck", "boat", "traffic light",
+// "fire hydrant", "stop sign", "parking meter"};
 
 static GstPadProbeReturn osd_sink_pad_buffer_probe (GstPad * pad, GstPadProbeInfo * info, gpointer u_data)
 {
@@ -37,25 +37,27 @@ static GstPadProbeReturn osd_sink_pad_buffer_probe (GstPad * pad, GstPadProbeInf
          l_frame = l_frame->next) {
         NvDsFrameMeta *frame_meta = (NvDsFrameMeta *) (l_frame->data);
         int offset = 0;
+        //std::cout<< " frame meta   \n";
         for (l_obj = frame_meta->obj_meta_list; l_obj != NULL;
              l_obj = l_obj->next) {
             obj_meta = (NvDsObjectMeta *) (l_obj->data);
-            if (obj_meta->class_id == PGIE_CLASS_ID_VEHICLE) {
-                vehicle_count++;
-                num_rects++;
-            }
-            if (obj_meta->class_id == PGIE_CLASS_ID_PERSON) {
-                person_count++;
-                num_rects++;
-            }
+            //std::cout<< " class:  " << obj_meta->class_id  << std::endl;
+            // if (obj_meta->class_id == PGIE_CLASS_ID_VEHICLE) {
+            //     vehicle_count++;
+            //     num_rects++;
+            // }
+            // if (obj_meta->class_id == PGIE_CLASS_ID_PERSON) {
+            //     person_count++;
+            //     num_rects++;
+            // }
 
 #if 0
             display_meta = nvds_acquire_display_meta_from_pool(batch_meta);
             NvOSD_TextParams *txt_params = &display_meta->text_params[0];
             display_meta->num_labels = 1;
             txt_params->display_text = static_cast<char *>( g_malloc0(MAX_DISPLAY_LEN));
-            offset = snprintf(txt_params->display_text, MAX_DISPLAY_LEN, "Person = %d ", person_count);
-            offset = snprintf(txt_params->display_text + offset, MAX_DISPLAY_LEN, "Vehicle = %d ", vehicle_count);
+            // offset = snprintf(txt_params->display_text, MAX_DISPLAY_LEN, "Person = %d ", person_count);
+            // offset = snprintf(txt_params->display_text + offset, MAX_DISPLAY_LEN, "Vehicle = %d ", vehicle_count);
 //
             /* Now set the offsets where the string should appear */
             txt_params->x_offset = 10;
@@ -228,7 +230,7 @@ int yolo_deepstream (int argc, char *argv[])
     /* Set all the necessary properties of the nvinfer element,
      * the necessary ones are : */
     g_object_set (G_OBJECT (pgie),
-                  "config-file-path", "../cfg/config_infer_primary_yoloV7.txt", NULL);
+                  "config-file-path", "../cfg/config_infer_primary_yolo_damo.txt", NULL);
 
     g_object_set (G_OBJECT (sink), "location", argv[2], NULL);
     g_object_set (G_OBJECT (sink), "sync", 1, NULL);
