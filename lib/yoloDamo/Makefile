@@ -43,13 +43,13 @@ LFLAGS:= -shared -Wl,--start-group $(LIBS) -Wl,--end-group
 #INCS:= $(wildcard *.h)
 #SRCFILES:= $(filter-out calibrator.cpp, $(wildcard *.cpp))
 
-INCS:= utils.h
-SRCFILES:= nvdsparsebbox_Yolo.cpp utils.cpp
+#INCS:= utils.h
+SRCFILES:= nvdsparsebbox_Yolo_cuda.cu #nvdsparsebbox_Yolo.cpp 
 
 #SRCFILES+= $(wildcard layers/*.cpp)
 #SRCFILES+= $(wildcard *.cu)
 
-TARGET_LIB:= libnvdsinfer_custom_impl_Yolo.so
+TARGET_LIB:= libnvdsinfer_custom_impl_Yolo_cuda.so
 
 TARGET_OBJS:= $(SRCFILES:.cpp=.o)
 TARGET_OBJS:= $(TARGET_OBJS:.cu=.o)
