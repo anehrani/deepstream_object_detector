@@ -230,7 +230,7 @@ int yolo_deepstream (int argc, char *argv[])
     /* Set all the necessary properties of the nvinfer element,
      * the necessary ones are : */
     g_object_set (G_OBJECT (pgie),
-                  "config-file-path", "../cfg/config_infer_primary_yolo_damo.txt", NULL);
+                  "config-file-path", "cfg/config_infer_primary_yolo_damo.txt", NULL);
 
     g_object_set (G_OBJECT (sink), "location", argv[2], NULL);
     g_object_set (G_OBJECT (sink), "sync", 1, NULL);

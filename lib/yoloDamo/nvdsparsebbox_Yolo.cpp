@@ -111,7 +111,7 @@ decodeTensorYoloE(
         maxIndex = i;
       }
 
-    if (maxScore < 0.5)
+    if (maxScore < preclusterThreshold[maxIndex])
       continue;
         
     float bx1 = boxes[b * 4 + 0];
